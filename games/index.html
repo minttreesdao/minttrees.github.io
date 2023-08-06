@@ -15,6 +15,8 @@
     <button id="joinButton">Join Game</button>
     <button id="revealButton">Reveal Move</button>
     <button id="resetButton">Reset Game</button>
+    <br>
+    <p id="winner"></p>
 
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
     <script>
@@ -169,10 +171,7 @@
     "signature": "0xdfbf53ae"
   }
 ]; 
-
-
-
-          
+            
             const gameContract = new web3.eth.Contract(abi, contractAddress);
 
             document.getElementById('joinButton').addEventListener('click', async () => {
@@ -189,13 +188,23 @@
                 const moveValue = moves[selectedMove];
                 const accounts = await web3.eth.getAccounts();
                 await gameContract.methods.reveal(moveValue, secret).send({from: accounts[0]});
+                const winner = await gameContract.methods.winner().call();
+                if (winner == accounts[0]) {
+                    document.getElementById('winner').innerText = "You won!";
+                } else if (winner == contractAddress) {
+                    document.getElementById('winner').innerText = "You lost!";
+                } else {
+                    document.getElementById('winner').innerText = "It's a tie!";
+                }
             });
 
             document.getElementById('resetButton').addEventListener('click', async () => {
                 const accounts = await web3.eth.getAccounts();
                 await gameContract.methods.reset().send({from: accounts[0]});
+                document.getElementById('winner').innerText = "";
             });
         });
     </script>
 </body>
 </html>
+
