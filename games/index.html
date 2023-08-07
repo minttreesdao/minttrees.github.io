@@ -1,210 +1,60 @@
 <!DOCTYPE html>
-<html>
-<body>
-    <h2>Rock Scissors Paper Game</h2>
-    <label for="move">Choose a move:</label>
-    <select id="move" name="move">
-      <option value="Rock">Rock</option>
-      <option value="Scissors">Scissors</option>
-      <option value="Paper">Paper</option>
-    </select>
-    <br>
-    <label for="secret">Enter a secret:</label>
-    <input type="text" id="secret" name="secret">
-    <br>
-    <button id="joinButton">Join Game</button>
-    <button id="revealButton">Reveal Move</button>
-    <button id="resetButton">Reset Game</button>
-    <br>
-    <p id="winner"></p>
-
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-    <script>
-        window.addEventListener('load', async () => {
-            // Modern dapp browsers...
-            if (window.ethereum) {
-                window.web3 = new Web3(ethereum);
-                try {
-                    // Request account access if needed
-                    await ethereum.enable();
-                } catch (error) {
-                    // User denied account access...
-                }
-            }
-            // Legacy dapp browsers...
-            else if (window.web3) {
-                window.web3 = new Web3(web3.currentProvider);
-            }
-            // Non-dapp browsers...
-            else {
-                console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-            }
-
-            const moves = {
-                'Rock': 1,
-                'Scissors': 2,
-                'Paper': 3
-            };
-
-            const networkId = await web3.eth.net.getId();
-            let contractAddress;
-            switch (networkId) {
-              case 80001: // Polygon Mumbai
-                contractAddress = '0x8bFd51626c3f63A242450568939F94f1202bCB86';
-                break;
-              case 8453: // Base
-                contractAddress = 'mainnet_contract_address';
-                break;
-              case 59144: // Linea
-                contractAddress = 'rinkeby_contract_address';
-                break;
-              case 1101: // Polygon zkEVM
-                contractAddress = 'optimism_contract_address';
-                break;
-              case 324: // zkSync Era
-                contractAddress = 'zksync_contract_address';
-                break;
-              default:
-                console.error('Unsupported network');
-            }
-
-            const abi = [
-  {
-    "inputs": [],
-    "name": "contractMove",
-    "outputs": [
-      {
-        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true,
-    "signature": "0xa2b3198b"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
-        "name": "move",
-        "type": "uint8"
-      },
-      {
-        "internalType": "string",
-        "name": "secret",
-        "type": "string"
-      }
-    ],
-    "name": "join",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0xc95468db"
-  },
-  {
-    "inputs": [],
-    "name": "player",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "addr",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "moveHash",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
-        "name": "move",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true,
-    "signature": "0x48db5f89"
-  },
-  {
-    "inputs": [],
-    "name": "reset",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0xd826f88f"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
-        "name": "move",
-        "type": "uint8"
-      },
-      {
-        "internalType": "string",
-        "name": "secret",
-        "type": "string"
-      }
-    ],
-    "name": "reveal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0xca3ed9e8"
-  },
-  {
-    "inputs": [],
-    "name": "winner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true,
-    "signature": "0xdfbf53ae"
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="tree-brain-conceptual-symbol-pngrepo-com.png">
+  <style>
+[class*="col-"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
   }
-]; 
-            
-            const gameContract = new web3.eth.Contract(abi, contractAddress);
+  .col-1 {width: 100%;}
 
-            document.getElementById('joinButton').addEventListener('click', async () => {
-                const selectedMove = document.getElementById('move').value;
-                const secret = document.getElementById('secret').value;
-                const moveValue = moves[selectedMove];
-                const accounts = await web3.eth.getAccounts();
-                await gameContract.methods.join(moveValue, secret).send({from: accounts[0]});
-            });
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
-            document.getElementById('revealButton').addEventListener('click', async () => {
-                const selectedMove = document.getElementById('move').value;
-                const secret = document.getElementById('secret').value;
-                const moveValue = moves[selectedMove];
-                const accounts = await web3.eth.getAccounts();
-                await gameContract.methods.reveal(moveValue, secret).send({from: accounts[0]});
-                const winner = await gameContract.methods.winner().call();
-                if (winner == accounts[0]) {
-                    document.getElementById('winner').innerText = "You won!";
-                } else if (winner == contractAddress) {
-                    document.getElementById('winner').innerText = "You lost!";
-                } else {
-                    document.getElementById('winner').innerText = "It's a tie!";
-                }
-            });
+  img:first-child {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
 
-            document.getElementById('resetButton').addEventListener('click', async () => {
-                const accounts = await web3.eth.getAccounts();
-                await gameContract.methods.reset().send({from: accounts[0]});
-                document.getElementById('winner').innerText = "";
-            });
-        });
-    </script>
+  a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+  }
+
+  .lens {
+    margin-top: 10px;
+  }
+
+  .twitter {
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+</style>
+</head>
+
+<body>
+  <div class="row">
+  <div class="col-1"> </div>
+  <div class="col-10"> <img src="minttrees_cover.png" alt="mint trees"> </div>
+  <div class="col-1"> </div>
+</div>
+  <div class="row">
+  <div class="col-1">  <a href="https://lenster.xyz/u/minttrees"> <img alt="lens" class="lens" src="assets/lens-logo_only.svg"></a> collect on lens and plant trees IRL. </div>
+  <div class="col-10"> </div>
+  <div class="col-1"> </div>
+</div>
+  <div class="row">
+  <div class="col-1"> <a href="https://twitter.com/minttrees_dao"> <img alt="twitter" class="twitter" src="assets/twitter-logo.svg"></a> </div>
+  <div class="col-10"> </div>
+  <div class="col-1"> </div>
+</div>
 </body>
 </html>
-
