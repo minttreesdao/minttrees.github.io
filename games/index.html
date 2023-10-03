@@ -1,22 +1,59 @@
 <!DOCTYPE html>
 <html>
-<body style="background-image: url('rock_scissors_paper.jpeg'); background-size: cover;">
-    <h2>Rock Scissors Paper Game</h2>
-    <label for="move">Choose a move:</label>
-    <select id="move" name="move">
-      <option value="Rock">Rock</option>
-      <option value="Scissors">Scissors</option>
-      <option value="Paper">Paper</option>
-    </select>
-    <br>
-    <label for="secret">Enter a secret:</label>
-    <input type="text" id="secret" name="secret">
-    <br>
-    <button id="joinButton">Join Game</button>
-    <button id="revealButton">Reveal Move</button>
-    <button id="resetButton">Reset Game</button>
-    <br>
-    <p id="winner"></p>
+<head>
+    <style>
+        body {
+            background-image: url('your_image_url'); 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Rock Scissors Paper Game</h2>
+        <label for="move">Choose a move:</label>
+        <select id="move" name="move">
+          <option value="Rock">Rock</option>
+          <option value="Scissors">Scissors</option>
+          <option value="Paper">Paper</option>
+        </select>
+        <br>
+        <label for="secret">Enter a secret:</label>
+        <input type="text" id="secret" name="secret">
+        <br>
+        <button id="joinButton">Join Game</button>
+        <button id="revealButton">Reveal Move</button>
+        <button id="resetButton">Reset Game</button>
+        <br>
+        <p id="status"></p>
+        <p id="contractMove"></p>
+        <p id="winner"></p>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
     <script>
