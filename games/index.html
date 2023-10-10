@@ -6,7 +6,7 @@
             background-image: url('rock_scissors_paper.jpeg'); 
             background-position: center;
             background-repeat: no-repeat;
-            background-size: auto;
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -89,6 +89,9 @@
               case 80001: // Polygon Mumbai
                 contractAddress = '0x5849eb9088eb58173a5619a409b7D30C3bB693B5';
                 break;
+              case 280: // zkSync Era Testnet
+                contractAddress = '0xcF881C49Ba1E5e077Bd41f78B95D654c2a1CC99f';
+                break;
               case 8453: // Base
                 contractAddress = 'mainnet_contract_address';
                 break;
@@ -99,7 +102,7 @@
                 contractAddress = 'optimism_contract_address';
                 break;
               case 324: // zkSync Era
-                contractAddress = 'zksync_contract_address';
+                contractAddress = '0xcf881c49ba1e5e077bd41f78b95d654c2a1cc99f';
                 break;
               default:
                 console.error('Unsupported network');
