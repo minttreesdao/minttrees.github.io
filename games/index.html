@@ -46,8 +46,8 @@
         <label for="secret">Enter a secret:</label>
         <input type="text" id="secret" name="secret">
         <br>
-        <button id="joinButton">Join Game</button>
-        <button id="revealButton">Reveal Move</button>
+        <button id="joinButton">Let's Play</button>
+        <br>
         <button id="resetButton">Reset Game</button>
         <br>
         <p id="status"></p>
@@ -111,10 +111,16 @@
             const abi = [
   {
     "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor",
+    "signature": "constructor"
+  },
+  {
+    "inputs": [],
     "name": "contractMove",
     "outputs": [
       {
-        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
+        "internalType": "enum RSPSinglePlayerGS.Move",
         "name": "",
         "type": "uint8"
       }
@@ -127,7 +133,7 @@
   {
     "inputs": [
       {
-        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
+        "internalType": "enum RSPSinglePlayerGS.Move",
         "name": "move",
         "type": "uint8"
       },
@@ -144,6 +150,25 @@
     "signature": "0xc95468db"
   },
   {
+    "inputs": [
+      {
+        "internalType": "enum RSPSinglePlayerGS.Move",
+        "name": "joinMove",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "secret",
+        "type": "string"
+      }
+    ],
+    "name": "joinAndReveal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "signature": "0x191a02d1"
+  },
+  {
     "inputs": [],
     "name": "player",
     "outputs": [
@@ -158,7 +183,7 @@
         "type": "bytes32"
       },
       {
-        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
+        "internalType": "enum RSPSinglePlayerGS.Move",
         "name": "move",
         "type": "uint8"
       }
@@ -179,7 +204,7 @@
   {
     "inputs": [
       {
-        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
+        "internalType": "enum RSPSinglePlayerGS.Move",
         "name": "move",
         "type": "uint8"
       },
@@ -219,19 +244,11 @@
                 const secret = document.getElementById('secret').value;
                 const moveValue = moves[selectedMove];
                 const accounts = await web3.eth.getAccounts();
-                await gameContract.methods.join(moveValue, secret).send({from: accounts[0]});
-                document.getElementById('status').innerText = "Joined the game";
-            });
-
-            document.getElementById('revealButton').addEventListener('click', async () => {
-                const selectedMove = document.getElementById('move').value;
-                const secret = document.getElementById('secret').value;
-                const moveValue = moves[selectedMove];
-                const accounts = await web3.eth.getAccounts();
-                await gameContract.methods.reveal(moveValue, secret).send({from: accounts[0]});
+                await gameContract.methods.joinAndReveal(moveValue, secret).send({from: accounts[0]});
                 const contractMove = await gameContract.methods.contractMove().call();
+                document.getElementById('status').innerText = "You joined the game";
                 document.getElementById('contractMove').innerText = "Contract chose: " + moves[contractMove];
-                document.getElementById('status').innerText = "Revealed move";
+                document.getElementById('status').innerText = "Your move";
                 const winner = await gameContract.methods.winner().call();
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
