@@ -34,6 +34,12 @@
             border-bottom: 1px solid #dee2e6;
         }
 
+        .main {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
         @media screen and (max-width: 600px) {
             .container {
                 width: 90%;
@@ -42,9 +48,10 @@
     </style>
 </head>
 <body>
-    <div class="chains">
-        <p>Available Chains: Mainnet, Rinkeby, Kovan, Optimism, zkSync</p>
-    </div>
+    <div class="main">
+        <div class="chains">
+            <p>Available Chains: Mainnet, Rinkeby, Kovan, Optimism, zkSync</p>
+        </div>
     <div class="container">
         <h2> </h2>
         <label for="move">Choose a move:</label>
