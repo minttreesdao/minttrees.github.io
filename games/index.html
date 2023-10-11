@@ -266,7 +266,6 @@
                 const contractMove = await gameContract.methods.contractMove().call();
                 document.getElementById('status').innerText = "You joined the game";
                 document.getElementById('contractMove').innerText = "Contract chose: " + moves[contractMove];
-                document.getElementById('status').innerText = "Your move";
                 const winner = await gameContract.methods.winner().call();
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
