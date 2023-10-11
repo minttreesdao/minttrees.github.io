@@ -25,6 +25,14 @@
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
         }
+        
+        .chains {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
 
         @media screen and (max-width: 600px) {
             .container {
@@ -34,6 +42,9 @@
     </style>
 </head>
 <body>
+    <div class="chains">
+        <p>Available Chains: Mainnet, Rinkeby, Kovan, Optimism, zkSync</p>
+    </div>
     <div class="container">
         <h2> </h2>
         <label for="move">Choose a move:</label>
