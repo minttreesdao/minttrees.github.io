@@ -53,6 +53,7 @@
         <div class="chains">
             <label for="move">on Mainnet</label>
             <select id="move" name="move">
+              <option value="none"> </option>
               <option value="Base">Base</option>
               <option value="Linea">Linea</option>
               <option value="zkSync">zkSync Era</option>
@@ -61,7 +62,8 @@
             <br>
             <label for="move">on Testnet</label>
             <select id="move" name="move">
-              <option value="Scroll">Scroll</option>
+                <option value="none"> </option>
+                <option value="Scroll">Scroll</option>
             </select>
             <br>
             <!-- 
@@ -70,25 +72,26 @@
             -->
             <p><a href="https://hey.xyz/posts/0x0f85-0x1c45-DA-6cd6bcf1">how to bridge?</a></p>
         </div>
-    <div class="container">
-        <h2> </h2>
-        <label for="move">Choose a move:</label>
-        <select id="move" name="move">
-          <option value="Rock">Rock</option>
-          <option value="Scissors">Scissors</option>
-          <option value="Paper">Paper</option>
-        </select>
-        <br>
-        <label for="secret">Enter a secret:</label>
-        <input type="text" id="secret" name="secret">
-        <br>
-        <button id="joinButton">Let's Play</button>
-        <br>
-        <button id="resetButton">Reset Game</button>
-        <br>
-        <p id="status"></p>
-        <p id="contractMove"></p>
-        <p id="winner"></p>
+        <div class="container">
+            <h2> </h2>
+            <label for="move">Choose a move:</label>
+            <select id="move" name="move">
+              <option value="Rock">Rock</option>
+              <option value="Scissors">Scissors</option>
+              <option value="Paper">Paper</option>
+            </select>
+            <br>
+            <label for="secret">Enter a secret:</label>
+            <input type="text" id="secret" name="secret">
+            <br>
+            <button id="joinButton">Let's Play</button>
+            <br>
+            <button id="resetButton">Reset Game</button>
+            <br>
+            <p id="status"></p>
+            <p id="contractMove"></p>
+            <p id="winner"></p>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
