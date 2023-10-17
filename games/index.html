@@ -50,7 +50,9 @@
 <body>
     <div class="main">
         <div class="chains">
-            <p>Available Chains: Mumbai, zkSync Goerli, zkSync Era</p>
+            <p>on Mainnet: Base, Linea, zkSync Era, Polygon zkEVM </p>
+            <p>on Testnet: Mumbai, zkSync Goerli, Scroll</p>
+            <p><a href="https://hey.xyz/posts/0x0f85-0x1c45-DA-6cd6bcf1">how to bridge?</a></p>
         </div>
     <div class="container">
         <h2> </h2>
@@ -111,16 +113,22 @@
                 contractAddress = '0x4604B0fa21a96F5FF2EB464a09E6d3b7f817E627';
                 break;
               case 8453: // Base
-                contractAddress = 'mainnet_contract_address';
+                contractAddress = '0x8bFd51626c3f63A242450568939F94f1202bCB86';
                 break;
               case 59144: // Linea
-                contractAddress = 'rinkeby_contract_address';
+                contractAddress = '0x4f5b83efc6F42208d0433FC3f33B24cc3fb38df2';
                 break;
               case 1101: // Polygon zkEVM
-                contractAddress = 'optimism_contract_address';
+                contractAddress = '0x8bFd51626c3f63A242450568939F94f1202bCB86';
                 break;
               case 324: // zkSync Era
                 contractAddress = '0xCE76Ae7b0Dc32E05652B2874b7f4292B31B8386B';
+                break;
+              case 534351: // Scroll Sepolia Testnet
+                contractAddress = '';
+                break;
+              case 534352: // Scroll Mainnet Testnet
+                contractAddress = '';
                 break;
               default:
                 console.error('Unsupported network');
