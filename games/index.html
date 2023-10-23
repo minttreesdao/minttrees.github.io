@@ -52,16 +52,17 @@
 </head>
 <body>
     <div class="main">
-        <button id="connectButton">Connect Wallet</button>
-        <br>
         <div class="chains">
+            <br>
+            <button id="connectButton">Connect Wallet</button>
+            <br>
             <label for="network">Choose a network:</label>
             <select id="network" name="network">
-              <option value="Base">Base</option>
-              <option value="Linea">Linea</option>
-              <option value="zkSync">zkSync Era</option>
-              <option value="zkEVM">Polygon zkEVM</option>
-              <option value="Scroll">Scroll</option>
+              <option value="0x2105">Base</option>
+              <option value="0xE730">Linea</option>
+              <option value="0x144">zkSync Era</option>
+              <option value="0x44D">Polygon zkEVM</option>
+              <option value="0x82630">Scroll</option>
             </select>
             <p id="networkMessage"></p>
             <br>
@@ -79,7 +80,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v0</h2>
+            <h2>Rock Scissors Paper v1</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -129,10 +130,21 @@
                 console.log(account);
             });
 
-            document.getElementById('network').addEventListener('change', (event) => {
-            const network = event.target.value;
-            document.getElementById('networkMessage').innerText = `Please switch to the ${network.charAt(0).toUpperCase() + network.slice(1)} network in MetaMask.`;
-            });
+            document.getElementById('network').addEventListener('change', async (event) => {
+            const selectedChainId = event.target.value;
+            const currentChainId = await ethereum.request({ method: 'eth_chainId' });
+            if (selectedChainId !== currentChainId) {
+                document.getElementById('networkMessage').innerText = `Please switch to the selected network in MetaMask.`;
+                ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: selectedChainId }],
+                }).catch((error) => {
+                    if (error.code === 4902) {
+                        document.getElementById('networkMessage').innerText += ' This network is not added to your MetaMask.';
+                    }
+                });
+            }
+        });
 
             const moves = {
                 'Rock': 1,
