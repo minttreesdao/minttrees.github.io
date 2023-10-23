@@ -52,31 +52,34 @@
 </head>
 <body>
     <div class="main">
+        <button id="connectButton">Connect Wallet</button>
+        <br>
         <div class="chains">
-            <label for="mainnet">on Mainnet</label>
-            <select id="mainnet" name="mainnet">
-              <option value="none"> </option>
+            <label for="network">Choose a network:</label>
+            <select id="network" name="network">
               <option value="Base">Base</option>
               <option value="Linea">Linea</option>
               <option value="zkSync">zkSync Era</option>
               <option value="zkEVM">Polygon zkEVM</option>
+              <option value="Scroll">Scroll</option>
             </select>
-            <br>
-            <label for="testnet">on Testnet</label>
-            <select id="testnet" name="testnet">
-                <option value="none"> </option>
-                <option value="Scroll">Scroll</option>
-            </select>
+            <p id="networkMessage"></p>
             <br>
             <!-- 
             <p>on Mainnet: Base, Linea, zkSync Era, Polygon zkEVM </p>
             <p>on Testnet: Mumbai, zkSync Goerli, Scroll</p>
+            
+            <label for="testnet">on Testnet</label>
+            <select id="testnet" name="testnet">
+                <option value="none"> </option>
+            </select>
+            <br>
             -->
             <p><a href="https://hey.xyz/posts/0x0f85-0x1c45-DA-6cd6bcf1">how to bridge?</a></p>
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v5</h2>
+            <h2>Rock Scissors Paper v0</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -119,6 +122,17 @@
             else {
                 console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
             }
+
+            document.getElementById('connectButton').addEventListener('click', async () => {
+                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                const account = accounts[0];
+                console.log(account);
+            });
+
+            document.getElementById('network').addEventListener('change', (event) => {
+            const network = event.target.value;
+            document.getElementById('networkMessage').innerText = `Please switch to the ${network.charAt(0).toUpperCase() + network.slice(1)} network in MetaMask.`;
+            });
 
             const moves = {
                 'Rock': 1,
