@@ -80,7 +80,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v5</h2>
+            <h2>Rock Scissors Paper v6</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -152,7 +152,7 @@
 
             const contracts = {
                 // Base
-                '0x2105': {
+                '8453': {
                     address: '0x8bFd51626c3f63A242450568939F94f1202bCB86',
                     abi: [
                           {
@@ -245,7 +245,7 @@
                         ]
                     },
                 // Scroll
-                '0x82750': {
+                '534352': {
                     address: '0x1beEe9EbE0465611eb87Fd93f0aC0c197aCfb209',
                     abi: [
                           {
@@ -339,6 +339,7 @@
               }
             };
 
+            let networkId = await web3.eth.net.getId();
             let contractInfo = contracts[networkId];
             let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
             
