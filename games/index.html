@@ -59,10 +59,10 @@
             <label for="network">Choose a network:</label>
             <select id="network" name="network">
               <option value="0x2105">Base</option>
-              <option value="0xE730">Linea</option>
+              <option value="0xe708">Linea</option>
               <option value="0x144">zkSync Era</option>
-              <option value="0x44D">Polygon zkEVM</option>
-              <option value="0x82630">Scroll</option>
+              <option value="0x44d">Polygon zkEVM</option>
+              <option value="0x82750">Scroll</option>
             </select>
             <p id="networkMessage"></p>
             <br>
@@ -80,7 +80,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v1</h2>
+            <h2>Rock Scissors Paper v2</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -140,7 +140,7 @@
                     params: [{ chainId: selectedChainId }],
                 }).catch((error) => {
                     if (error.code === 4902) {
-                        document.getElementById('networkMessage').innerText += ' This network is not added to your MetaMask.';
+                        document.getElementById('networkMessage').innerText += '\n This network is not added to your MetaMask.';
                     }
                 });
             }
