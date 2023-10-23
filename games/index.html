@@ -56,7 +56,7 @@
             <br>
             <button id="connectButton">Connect Wallet</button>
             <br>
-            <label for="network">Choose a network:</label>
+            <label for="network">Choose an L2</label>
             <select id="network" name="network">
               <option value="0x2105">Base</option>
               <option value="0xe708">Linea</option>
@@ -80,7 +80,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v2</h2>
+            <h2>Rock Scissors Paper v3</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -111,6 +111,10 @@
                 try {
                     // Request account access if needed
                     await ethereum.enable();
+                    // Check if a wallet is connected
+                    if (ethereum.selectedAddress) {
+                        document.getElementById('connectButton').innerText = 'Connected';
+                    }
                 } catch (error) {
                     // User denied account access...
                 }
