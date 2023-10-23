@@ -75,7 +75,9 @@
             <p><a href="https://hey.xyz/posts/0x0f85-0x1c45-DA-6cd6bcf1">how to bridge?</a></p>
         </div>
         <div class="container">
-            <h2>Rock Scissors Paper v4</h2>
+            
+            <h2>Rock Scissors Paper v5</h2>
+            
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
               <option value="Rock">Rock</option>
@@ -246,7 +248,7 @@
 ];
             
             const gameContract = new web3.eth.Contract(abi, contractAddress);
-            /*
+
             document.getElementById('joinButton').addEventListener('click', async () => {
                 const selectedMove = document.getElementById('move').value;
                 const secret = document.getElementById('secret').value;
@@ -265,8 +267,8 @@
                     document.getElementById('winner').innerText = "It's a tie!";
                 }
             });
-            */
-
+            
+            /*
             document.getElementById('joinButton').addEventListener('click', async () => {
                 const selectedMove = document.getElementById('move').value;
                 const secret = document.getElementById('secret').value;
@@ -274,8 +276,8 @@
                 await gameContract.methods.joinAndReveal(selectedMove, secret).send({from: accounts[0]});
                 document.getElementById('status').innerText = "Joined and revealed move";
             });
+            */
             
-
             document.getElementById('resetButton').addEventListener('click', async () => {
                 const accounts = await web3.eth.getAccounts();
                 await gameContract.methods.reset().send({from: accounts[0]});
