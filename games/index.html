@@ -80,7 +80,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v7</h2>
+            <h2>Rock Scissors Paper v8</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -397,7 +397,7 @@
                 const winner = await gameContract.methods.winner().call();
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
-                } else if (winner == contractAddress) {
+                } else if (winner == contractInfo.address) {
                     document.getElementById('winner').innerText = "You lost!";
                 } else {
                     document.getElementById('winner').innerText = "It's a tie!";
