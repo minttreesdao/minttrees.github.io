@@ -80,7 +80,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v6</h2>
+            <h2>Rock Scissors Paper v7</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -342,6 +342,12 @@
             let networkId = await web3.eth.net.getId();
             let contractInfo = contracts[networkId];
             let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
+
+            const moves = {
+                'Rock': 1,
+                'Scissors': 2,
+                'Paper': 3
+            };
             
             /*
             const networkId = await web3.eth.net.getId();
@@ -379,7 +385,7 @@
             const gameContract = new web3.eth.Contract(abi, contractAddress);
             */ 
 
-            document.getElementById('joinButton').addEventListener('click', async () => {
+            document.getElementById('joinButton').addEventListener('click', async () => m{
                 const selectedMove = document.getElementById('move').value;
                 const secret = document.getElementById('secret').value;
                 const moveValue = moves[selectedMove];
