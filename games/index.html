@@ -146,10 +146,10 @@
                 contractAddress = '0xCE76Ae7b0Dc32E05652B2874b7f4292B31B8386B';
                 break;
               case 534351: // Scroll Sepolia Testnet
-                contractAddress = '';
+                contractAddress = '0x6589fe2EA8ECAF991792eD734A5baE568564380E';
                 break;
               case 534352: // Scroll Mainnet Testnet
-                contractAddress = '';
+                contractAddress = '0x8bFd51626c3f63A242450568939F94f1202bCB86';
                 break;
               default:
                 console.error('Unsupported network');
@@ -158,16 +158,10 @@
             const abi = [
   {
     "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor",
-    "signature": "constructor"
-  },
-  {
-    "inputs": [],
     "name": "contractMove",
     "outputs": [
       {
-        "internalType": "enum RSPSinglePlayerGS.Move",
+        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
         "name": "",
         "type": "uint8"
       }
@@ -180,7 +174,7 @@
   {
     "inputs": [
       {
-        "internalType": "enum RSPSinglePlayerGS.Move",
+        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
         "name": "move",
         "type": "uint8"
       },
@@ -199,8 +193,13 @@
   {
     "inputs": [
       {
-        "internalType": "enum RSPSinglePlayerGS.Move",
+        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
         "name": "joinMove",
+        "type": "uint8"
+      },
+      {
+        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
+        "name": "revealMove",
         "type": "uint8"
       },
       {
@@ -213,7 +212,7 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function",
-    "signature": "0x191a02d1"
+    "signature": "0x9f08ce6f"
   },
   {
     "inputs": [],
@@ -230,7 +229,7 @@
         "type": "bytes32"
       },
       {
-        "internalType": "enum RSPSinglePlayerGS.Move",
+        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
         "name": "move",
         "type": "uint8"
       }
@@ -251,7 +250,7 @@
   {
     "inputs": [
       {
-        "internalType": "enum RSPSinglePlayerGS.Move",
+        "internalType": "enum RockScissorsPaperSinglePlayerEasyRestart.Move",
         "name": "move",
         "type": "uint8"
       },
