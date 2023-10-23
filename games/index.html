@@ -284,7 +284,7 @@
 ]; 
             
             const gameContract = new web3.eth.Contract(abi, contractAddress);
-
+            /*
             document.getElementById('joinButton').addEventListener('click', async () => {
                 const selectedMove = document.getElementById('move').value;
                 const secret = document.getElementById('secret').value;
@@ -303,6 +303,16 @@
                     document.getElementById('winner').innerText = "It's a tie!";
                 }
             });
+            */
+
+                document.getElementById('joinButton').addEventListener('click', async () => {
+                const selectedMove = document.getElementById('move').value;
+                const secret = document.getElementById('secret').value;
+                const accounts = await web3.eth.getAccounts();
+                await gameContract.methods.joinAndReveal(selectedMove, secret).send({from: accounts[0]});
+                document.getElementById('status').innerText = "Joined and revealed move";
+            });
+            
 
             document.getElementById('resetButton').addEventListener('click', async () => {
                 const accounts = await web3.eth.getAccounts();
