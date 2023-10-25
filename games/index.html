@@ -79,7 +79,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v13</h2>
+            <h2>Rock Scissors Paper v14</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -666,9 +666,11 @@
                 console.error('Unsupported network');
             }
             */
+
+            /*
             // start
-            document.getElementById('winner').innerText = "contract address: " + contractInfo.address;
-            document.getElementById('winner').innerText = "network id:" + networkId;
+            document.getElementById('networkMessage').innerText = "contract address: " + contractInfo.address;
+            document.getElementById('networkMessage').innerText = "network id:" + networkId;
             
             const contractAddress = '0x6589fe2EA8ECAF991792eD734A5baE568564380E';
             const abi= [
@@ -764,6 +766,7 @@
             gameContract = new web3.eth.Contract(abi, contractAddress);
 
             // end
+            */
 
             
             document.getElementById('joinButton').addEventListener('click', async () => {
@@ -782,8 +785,8 @@
                 const winner = await gameContract.methods.winner().call();
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
-                } else if (winner == contractAddress) {
-                // } else if (winner == contractInfo.address) {
+                // } else if (winner == contractAddress) {
+                } else if (winner == contractInfo.address) {
                     document.getElementById('winner').innerText = "You lost!";
                 } else {
                     document.getElementById('winner').innerText = "It's a tie!";
