@@ -80,7 +80,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v20</h2>
+            <h2>Rock Scissors Paper v19</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -855,7 +855,6 @@
                 let networkId = await web3.eth.net.getId();
                 let contractInfo = contracts[networkId];
                 let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
-                document.getElementById('log').innerText = "networkId " + networkId;
 
                 console.log('networkId resetButton: ' + networkId);
 
