@@ -79,7 +79,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v12</h2>
+            <h2>Rock Scissors Paper v13</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -775,6 +775,10 @@
                 const contractMove = await gameContract.methods.contractMove().call();
                 document.getElementById('status').innerText = "You joined the game";
                 document.getElementById('contractMove').innerText = "Contract chose: " + moves[contractMove];
+                
+                document.getElementById('contractMove').innerText = "Contract chose: " + contractMove;
+                document.getElementById('contractMove').innerText = "winner " + winner;
+                
                 const winner = await gameContract.methods.winner().call();
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
