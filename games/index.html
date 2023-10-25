@@ -79,7 +79,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v15</h2>
+            <h2>Rock Scissors Paper v16</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -103,6 +103,33 @@
 
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
     <script>
+        window.addEventListener('load', async () => {
+            // Modern dapp browsers...
+            if (window.ethereum) {
+                window.web3 = new Web3(ethereum);
+            }
+            // Legacy dapp browsers...
+            else if (window.web3) {
+                window.web3 = new Web3(web3.currentProvider);
+            }
+            // Non-dapp browsers...
+            else {
+                console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+            }
+
+            document.getElementById('connectButton').addEventListener('click', async () => {
+                try {
+                    // Request account access if needed
+                    await ethereum.enable();
+                } catch (error) {
+                    // User denied account access...
+                    console.error("User denied account access");
+                }
+            });
+        });
+
+
+        /*
         window.addEventListener('load', async () => {
             // Modern dapp browsers...
             if (window.ethereum) {
@@ -132,6 +159,7 @@
                 const account = accounts[0];
                 console.log(account);
             });
+            */
 
             window.addEventListener('load', async () => {
             // Fetch the current network ID
@@ -538,7 +566,7 @@
                         },
                 // Scroll
                 '534352': {
-                    address: '0x1beEe9EbE0465611eb87Fd93f0aC0c197aCfb209',
+                    address: '0x6589fe2EA8ECAF991792eD734A5baE568564380E',
                     abi: [
                           {
                             "inputs": [],
