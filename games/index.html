@@ -56,8 +56,9 @@
             <br>
             <button id="connectButton">Connect Wallet</button>
             <br>
-            <label for="network">Choose an L2</label>
+            <!-- <label for="network">Choose an L2</label> -->
             <select id="network" name="network">
+              <option value=" ">Choose an L2</option>
               <option value="0x2105">Base</option>
               <option value="0xe708">Linea</option>
               <option value="0x144">zkSync Era</option>
@@ -79,7 +80,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v19</h2>
+            <h2>Rock Scissors Paper v20</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -851,10 +852,10 @@
             document.getElementById('resetButton').addEventListener('click', async () => {
                 const accounts = await web3.eth.getAccounts();
 
-                document.getElementById('log').innerText = "networkId " + networkId;
                 let networkId = await web3.eth.net.getId();
                 let contractInfo = contracts[networkId];
                 let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
+                document.getElementById('log').innerText = "networkId " + networkId;
 
                 console.log('networkId resetButton: ' + networkId);
 
