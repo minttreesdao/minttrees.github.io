@@ -82,7 +82,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v22</h2>
+            <h2>Rock Scissors Paper v23</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -130,39 +130,6 @@
                 }
             });
 
-
-        /*
-        window.addEventListener('load', async () => {
-            // Modern dapp browsers...
-            if (window.ethereum) {
-                window.web3 = new Web3(ethereum);
-                try {
-                    // Request account access if needed
-                    await ethereum.enable();
-                    // Check if a wallet is connected
-                    if (ethereum.selectedAddress) {
-                        document.getElementById('connectButton').innerText = 'Connected';
-                    }
-                } catch (error) {
-                    // User denied account access...
-                }
-            }
-            // Legacy dapp browsers...
-            else if (window.web3) {
-                window.web3 = new Web3(web3.currentProvider);
-            }
-            // Non-dapp browsers...
-            else {
-                console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-            }
-
-            document.getElementById('connectButton').addEventListener('click', async () => {
-                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                const account = accounts[0];
-                console.log(account);
-            });
-            */
-
             window.addEventListener('load', async () => {
             // Fetch the current network ID
             const currentChainId = await ethereum.request({ method: 'eth_chainId' });
@@ -201,6 +168,11 @@
                 'Rock': 1,
                 'Scissors': 2,
                 'Paper': 3
+            };
+            const moves_lookup = {
+                1: 'Rock',
+                2: 'Scissors',
+                3: 'Paper'
             };
             
             const abi= [
@@ -346,13 +318,15 @@
                 await gameContract.methods.joinAndReveal(moveValue, secret).send({from: accounts[0]});
                 const contractMove = await gameContract.methods.contractMove().call();
                 document.getElementById('status').innerText = "You joined the game";
-                document.getElementById('contractMove').innerText = "Contract chose: " + moves[contractMove];
+                document.getElementById('contractMove').innerText = "Contract chose: " + moves_lookup[contractMove];
                 
                 const winner = await gameContract.methods.winner().call();
                 
                 console.log('winner: ' + winner);
+                console.log('player chose ' + selectedMove);
+                console.log('player chose txt ' + moves[selectedMove]);
                 console.log('contract chose ' + contractMove);
-                console.log('contract chose txt ' + moves[contractMove]);
+                console.log('contract chose txt ' + moves_lookup[contractMove]);
                 
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
