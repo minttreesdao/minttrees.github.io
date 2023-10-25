@@ -59,6 +59,8 @@
             <!-- <label for="network">Choose an L2</label> -->
             <select id="network" name="network">
               <option value=" ">Choose an L2</option>
+              <option value="0x14a33">T Base Goerli</option>
+              <option value="0x8274f">T Scroll Sepolia</option>
               <option value="0x2105">Base</option>
               <option value="0xe708">Linea</option>
               <option value="0x144">zkSync Era</option>
@@ -80,7 +82,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v19</h2>
+            <h2>Rock Scissors Paper v20</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -195,6 +197,192 @@
             });
 
             const contracts = {
+              // Scroll Sepolia
+                '534351': {
+                    address: '0x0502Cb01F792533597BbC5d51f6bA677d6962eA8',
+                    abi: [
+                          {
+                            "inputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "constructor"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "contractMove",
+                            "outputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xa2b3198b"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "joinMove",
+                                "type": "uint8"
+                              },
+                              {
+                                "internalType": "string",
+                                "name": "secret",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "joinAndReveal",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0x191a02d1"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "player",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "addr",
+                                "type": "address"
+                              },
+                              {
+                                "internalType": "bytes32",
+                                "name": "moveHash",
+                                "type": "bytes32"
+                              },
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "move",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0x48db5f89"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "reset",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0xd826f88f"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "winner",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xdfbf53ae"
+                          }
+                        ]
+                    },
+                // Base Testnet
+                '84531': {
+                    address: '0xBCE9F3665b1d599DC0c41BA397B1219fd4198F52',
+                    abi: [
+                          {
+                            "inputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "constructor"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "contractMove",
+                            "outputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xa2b3198b"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "joinMove",
+                                "type": "uint8"
+                              },
+                              {
+                                "internalType": "string",
+                                "name": "secret",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "joinAndReveal",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0x191a02d1"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "player",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "addr",
+                                "type": "address"
+                              },
+                              {
+                                "internalType": "bytes32",
+                                "name": "moveHash",
+                                "type": "bytes32"
+                              },
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "move",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0x48db5f89"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "reset",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0xd826f88f"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "winner",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xdfbf53ae"
+                          }
+                        ]
+                    },
                 // Base
                 '8453': {
                     address: '0x6589fe2EA8ECAF991792eD734A5baE568564380E',
