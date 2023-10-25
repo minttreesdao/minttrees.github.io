@@ -1009,12 +1009,10 @@
                 document.getElementById('status').innerText = "You joined the game";
                 document.getElementById('contractMove').innerText = "Contract chose: " + moves[contractMove];
                 
-                document.getElementById('contractMove').innerText = "Contract chose: " + contractMove;
-                
                 const winner = await gameContract.methods.winner().call();
                 
                 console.log('winner: ' + winner);
-                console.log('contract ' + contractInfo.address);
+                console.log('contract ' + contractAddress);
                 console.log('player ' + accounts[0]);
                 
                 if (winner == accounts[0]) {
