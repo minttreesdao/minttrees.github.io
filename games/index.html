@@ -79,7 +79,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v16</h2>
+            <h2>Rock Scissors Paper v17</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -126,7 +126,6 @@
                     console.error("User denied account access");
                 }
             });
-        });
 
 
         /*
@@ -659,7 +658,6 @@
               }
             };
 
-            let networkId = await web3.eth.net.getId();
             let contractInfo = contracts[networkId];
             let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
 
