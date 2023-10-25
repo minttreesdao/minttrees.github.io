@@ -79,7 +79,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v18</h2>
+            <h2>Rock Scissors Paper v19</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -163,6 +163,7 @@
             window.addEventListener('load', async () => {
             // Fetch the current network ID
             const currentChainId = await ethereum.request({ method: 'eth_chainId' });
+            console.log('current chainid: ' + currentChainId);
 
             // Set the dropdown's value to the current network ID
             document.getElementById('network').value = currentChainId;
@@ -189,6 +190,9 @@
                 document.getElementById('networkMessage').innerText = '';
                 }
             });
+
+            console.log('current chainid later: ' + currentChainId);
+            console.log('current chainid later: ' + newChainId);
 
             const contracts = {
                 // Base
@@ -810,7 +814,7 @@
                 let contractInfo = contracts[networkId];
                 let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
 
-                document.getElementById('log').innerText = "networkId " + networkId;
+                console.log('networkId joinButton: ' + networkId);
                 
                 await gameContract.methods.joinAndReveal(moveValue, secret).send({from: accounts[0]});
                 const contractMove = await gameContract.methods.contractMove().call();
@@ -821,9 +825,9 @@
                 
                 const winner = await gameContract.methods.winner().call();
                 
-                document.getElementById('contractMove').innerText = "winner " + winner;
-                document.getElementById('contractMove').innerText = "contract " + contractAddress;
-                document.getElementById('contractMove').innerText = "player " + accounts[0];
+                console.log('winner: ' + winner);
+                console.log('contract ' + contractAddress);
+                console.log('player ' + accounts[0]);
                 
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
@@ -852,6 +856,9 @@
                 let networkId = await web3.eth.net.getId();
                 let contractInfo = contracts[networkId];
                 let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
+
+                console.log('networkId resetButton: ' + networkId);
+
                 await gameContract.methods.reset().send({from: accounts[0]});
                 document.getElementById('status').innerText = "Game reset";
                 document.getElementById('contractMove').innerText = "";
