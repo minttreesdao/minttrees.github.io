@@ -82,7 +82,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v23</h2>
+            <h2>Rock Scissors Paper v22</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -143,13 +143,13 @@
             const selectedChainId = event.target.value;
             const currentChainId = await ethereum.request({ method: 'eth_chainId' });
             if (selectedChainId !== currentChainId) {
-                document.getElementById('networkMessage').innerText = `Please switch to the selected network in MetaMask.`;
+                // document.getElementById('networkMessage').innerText = `Please switch to the selected network in MetaMask.`;
                 ethereum.request({
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: selectedChainId }],
                 }).catch((error) => {
                     if (error.code === 4902) {
-                        document.getElementById('networkMessage').innerText += '\n This network is not added to your MetaMask.';
+                        document.getElementById('networkMessage').innerText += 'This network is not added to your MetaMask.';
                     }
                 });
                 }
