@@ -79,7 +79,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v17</h2>
+            <h2>Rock Scissors Paper v18</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -810,6 +810,8 @@
                 let contractInfo = contracts[networkId];
                 let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
 
+                document.getElementById('log').innerText = "networkId " + networkId;
+                
                 await gameContract.methods.joinAndReveal(moveValue, secret).send({from: accounts[0]});
                 const contractMove = await gameContract.methods.contractMove().call();
                 document.getElementById('status').innerText = "You joined the game";
@@ -819,7 +821,6 @@
                 
                 const winner = await gameContract.methods.winner().call();
                 
-                document.getElementById('contractMove').innerText = "networkId " + networkId;
                 document.getElementById('contractMove').innerText = "winner " + winner;
                 document.getElementById('contractMove').innerText = "contract " + contractAddress;
                 document.getElementById('contractMove').innerText = "player " + accounts[0];
@@ -846,6 +847,11 @@
             
             document.getElementById('resetButton').addEventListener('click', async () => {
                 const accounts = await web3.eth.getAccounts();
+
+                document.getElementById('log').innerText = "networkId " + networkId;
+                let networkId = await web3.eth.net.getId();
+                let contractInfo = contracts[networkId];
+                let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
                 await gameContract.methods.reset().send({from: accounts[0]});
                 document.getElementById('status').innerText = "Game reset";
                 document.getElementById('contractMove').innerText = "";
