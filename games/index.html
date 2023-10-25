@@ -82,7 +82,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v21</h2>
+            <h2>Rock Scissors Paper v22</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -351,8 +351,8 @@
                 const winner = await gameContract.methods.winner().call();
                 
                 console.log('winner: ' + winner);
-                console.log('contract ' + contractInfo.address);
-                console.log('player ' + accounts[0]);
+                console.log('contract chose ' + contractMove);
+                console.log('contract chose txt ' + moves[contractMove]);
                 
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
