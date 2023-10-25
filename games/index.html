@@ -669,105 +669,103 @@
             // start
             document.getElementById('winner').innerText = "contract address: " + contractInfo.address;
             document.getElementById('winner').innerText = "network id:" + networkId;
-            document.getElementById('winner').innerText = "abi" + contractInfo.abi;
             
             const contractAddress = '0x8bFd51626c3f63A242450568939F94f1202bCB86';
             const abi= [
+                      {
+                        "inputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "constructor"
+                      },
+                      {
+                        "inputs": [],
+                        "name": "contractMove",
+                        "outputs": [
                           {
-                            "inputs": [],
-                            "stateMutability": "nonpayable",
-                            "type": "constructor"
-                          },
-                          {
-                            "inputs": [],
-                            "name": "contractMove",
-                            "outputs": [
-                              {
-                                "internalType": "enum RSPSinglePlayerGS.Move",
-                                "name": "",
-                                "type": "uint8"
-                              }
-                            ],
-                            "stateMutability": "view",
-                            "type": "function",
-                            "constant": true,
-                            "signature": "0xa2b3198b"
-                          },
-                          {
-                            "inputs": [
-                              {
-                                "internalType": "enum RSPSinglePlayerGS.Move",
-                                "name": "joinMove",
-                                "type": "uint8"
-                              },
-                              {
-                                "internalType": "string",
-                                "name": "secret",
-                                "type": "string"
-                              }
-                            ],
-                            "name": "joinAndReveal",
-                            "outputs": [],
-                            "stateMutability": "nonpayable",
-                            "type": "function",
-                            "signature": "0x191a02d1"
-                          },
-                          {
-                            "inputs": [],
-                            "name": "player",
-                            "outputs": [
-                              {
-                                "internalType": "address",
-                                "name": "addr",
-                                "type": "address"
-                              },
-                              {
-                                "internalType": "bytes32",
-                                "name": "moveHash",
-                                "type": "bytes32"
-                              },
-                              {
-                                "internalType": "enum RSPSinglePlayerGS.Move",
-                                "name": "move",
-                                "type": "uint8"
-                              }
-                            ],
-                            "stateMutability": "view",
-                            "type": "function",
-                            "constant": true,
-                            "signature": "0x48db5f89"
-                          },
-                          {
-                            "inputs": [],
-                            "name": "reset",
-                            "outputs": [],
-                            "stateMutability": "nonpayable",
-                            "type": "function",
-                            "signature": "0xd826f88f"
-                          },
-                          {
-                            "inputs": [],
-                            "name": "winner",
-                            "outputs": [
-                              {
-                                "internalType": "address",
-                                "name": "",
-                                "type": "address"
-                              }
-                            ],
-                            "stateMutability": "view",
-                            "type": "function",
-                            "constant": true,
-                            "signature": "0xdfbf53ae"
+                            "internalType": "enum RSPSinglePlayerGS.Move",
+                            "name": "",
+                            "type": "uint8"
                           }
-                        ];
+                        ],
+                        "stateMutability": "view",
+                        "type": "function",
+                        "constant": true,
+                        "signature": "0xa2b3198b"
+                      },
+                      {
+                        "inputs": [
+                          {
+                            "internalType": "enum RSPSinglePlayerGS.Move",
+                            "name": "joinMove",
+                            "type": "uint8"
+                          },
+                          {
+                            "internalType": "string",
+                            "name": "secret",
+                            "type": "string"
+                          }
+                        ],
+                        "name": "joinAndReveal",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function",
+                        "signature": "0x191a02d1"
+                      },
+                      {
+                        "inputs": [],
+                        "name": "player",
+                        "outputs": [
+                          {
+                            "internalType": "address",
+                            "name": "addr",
+                            "type": "address"
+                          },
+                          {
+                            "internalType": "bytes32",
+                            "name": "moveHash",
+                            "type": "bytes32"
+                          },
+                          {
+                            "internalType": "enum RSPSinglePlayerGS.Move",
+                            "name": "move",
+                            "type": "uint8"
+                          }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function",
+                        "constant": true,
+                        "signature": "0x48db5f89"
+                      },
+                      {
+                        "inputs": [],
+                        "name": "reset",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function",
+                        "signature": "0xd826f88f"
+                      },
+                      {
+                        "inputs": [],
+                        "name": "winner",
+                        "outputs": [
+                          {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                          }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function",
+                        "constant": true,
+                        "signature": "0xdfbf53ae"
+                      }
+                    ];
                         
-            
             gameContract = new web3.eth.Contract(abi, contractAddress);
-
 
             // end
 
+            
             document.getElementById('joinButton').addEventListener('click', async () => {
                 const selectedMove = document.getElementById('move').value;
                 const secret = document.getElementById('secret').value;
@@ -780,7 +778,8 @@
                 const winner = await gameContract.methods.winner().call();
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
-                } else if (winner == contractInfo.address) {
+                } else if (winner == contractAddress) {
+                // } else if (winner == contractInfo.address) {
                     document.getElementById('winner').innerText = "You lost!";
                 } else {
                     document.getElementById('winner').innerText = "It's a tie!";
