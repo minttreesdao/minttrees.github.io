@@ -79,7 +79,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v14</h2>
+            <h2>Rock Scissors Paper v15</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -131,6 +131,14 @@
                 const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
                 const account = accounts[0];
                 console.log(account);
+            });
+
+            window.addEventListener('load', async () => {
+            // Fetch the current network ID
+            const currentChainId = await ethereum.request({ method: 'eth_chainId' });
+
+            // Set the dropdown's value to the current network ID
+            document.getElementById('network').value = currentChainId;
             });
 
             document.getElementById('network').addEventListener('change', async (event) => {
@@ -780,9 +788,13 @@
                 document.getElementById('contractMove').innerText = "Contract chose: " + moves[contractMove];
                 
                 document.getElementById('contractMove').innerText = "Contract chose: " + contractMove;
-                document.getElementById('contractMove').innerText = "winner " + winner;
                 
                 const winner = await gameContract.methods.winner().call();
+                
+                document.getElementById('contractMove').innerText = "winner " + winner;
+                document.getElementById('contractMove').innerText = "contract " + contractAddress;
+                document.getElementById('contractMove').innerText = "player " + accounts[0];
+                
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "You won!";
                 // } else if (winner == contractAddress) {
