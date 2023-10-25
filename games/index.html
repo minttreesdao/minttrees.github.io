@@ -658,9 +658,6 @@
               }
             };
 
-            let contractInfo = contracts[networkId];
-            let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
-
             const moves = {
                 'Rock': 1,
                 'Scissors': 2,
@@ -808,6 +805,11 @@
                 const secret = document.getElementById('secret').value;
                 const moveValue = moves[selectedMove];
                 const accounts = await web3.eth.getAccounts();
+
+                let networkId = await web3.eth.net.getId();
+                let contractInfo = contracts[networkId];
+                let gameContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
+
                 await gameContract.methods.joinAndReveal(moveValue, secret).send({from: accounts[0]});
                 const contractMove = await gameContract.methods.contractMove().call();
                 document.getElementById('status').innerText = "You joined the game";
@@ -817,6 +819,7 @@
                 
                 const winner = await gameContract.methods.winner().call();
                 
+                document.getElementById('contractMove').innerText = "networkId " + networkId;
                 document.getElementById('contractMove').innerText = "winner " + winner;
                 document.getElementById('contractMove').innerText = "contract " + contractAddress;
                 document.getElementById('contractMove').innerText = "player " + accounts[0];
