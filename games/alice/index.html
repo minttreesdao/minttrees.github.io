@@ -89,7 +89,7 @@
         </div>
         <div class="container">
             
-            <h2>Rock Scissors Paper v0.22</h2>
+            <h2>Rock Scissors Paper v22</h2>
             
             <label for="move">Choose a move:</label>
             <select id="move" name="move">
@@ -117,10 +117,34 @@
             // Modern dapp browsers...
             if (window.ethereum) {
                 window.web3 = new Web3(ethereum);
+                try {
+                    // Request account access if needed
+                    await ethereum.enable();
+                    // Check if a wallet is connected
+                    if (ethereum.selectedAddress) {
+                        document.getElementById('connectButton').innerText = 'Connected';
+                    }
+                } catch (error) {
+                    // User denied account access...
+                    console.error("User denied account access");
+                }
+
+                ethereum.on('accountsChanged', function (accounts) {
+                    // When the connected account changes, update the button text
+                    if (accounts.length > 0) {
+                        document.getElementById('connectButton').innerText = 'Connected';
+                    } else {
+                        document.getElementById('connectButton').innerText = 'Connect Wallet';
+                    }
+                });
             }
             // Legacy dapp browsers...
             else if (window.web3) {
                 window.web3 = new Web3(web3.currentProvider);
+                // Check if a wallet is connected
+                if (web3.eth.defaultAccount) {
+                    document.getElementById('connectButton').innerText = 'Connected';
+                }
             }
             // Non-dapp browsers...
             else {
@@ -131,20 +155,23 @@
                 try {
                     // Request account access if needed
                     await ethereum.enable();
+                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                    const account = accounts[0];
+                    document.getElementById('connectButton').innerText = 'Connected';
                 } catch (error) {
                     // User denied account access...
                     console.error("User denied account access");
                 }
             });
 
-            window.addEventListener('load', async () => {
+            // window.addEventListener('load', async () => {
             // Fetch the current network ID
             const currentChainId = await ethereum.request({ method: 'eth_chainId' });
             console.log('current chainid: ' + currentChainId);
 
             // Set the dropdown's value to the current network ID
             document.getElementById('network').value = currentChainId;
-            });
+            // });
 
             document.getElementById('network').addEventListener('change', async (event) => {
             const selectedChainId = event.target.value;
