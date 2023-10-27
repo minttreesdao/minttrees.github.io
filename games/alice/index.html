@@ -107,6 +107,9 @@
             if (window.ethereum) {
                 window.web3 = new Web3(ethereum);
                 try {
+                    // Request account access if needed
+                    // await ethereum.enable();
+                    // Check if a wallet is connected
                     if (ethereum.selectedAddress) {
                         document.getElementById('connectButton').innerText = 'Connected';
                     }
@@ -114,6 +117,7 @@
                     // User denied account access...
                     console.error("User denied account access");
                 }
+
                 ethereum.on('accountsChanged', function (accounts) {
                     // When the connected account changes, update the button text
                     if (accounts.length > 0) {
@@ -149,17 +153,20 @@
                 }
             });
 
+            // window.addEventListener('load', async () => {
             // Fetch the current network ID
             const currentChainId = await ethereum.request({ method: 'eth_chainId' });
             console.log('current chainid: ' + currentChainId);
 
             // Set the dropdown's value to the current network ID
             document.getElementById('network').value = currentChainId;
+            // });
 
             document.getElementById('network').addEventListener('change', async (event) => {
             const selectedChainId = event.target.value;
             const currentChainId = await ethereum.request({ method: 'eth_chainId' });
             if (selectedChainId !== currentChainId) {
+                // document.getElementById('networkMessage').innerText = `Please switch to the selected network in MetaMask.`;
                 ethereum.request({
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: selectedChainId }],
@@ -399,6 +406,664 @@
                 document.getElementById('winner').innerText = "";
             });
         });
+
+
+
+            /*
+            const contracts = {
+              // Scroll Sepolia
+                '534351': {
+                    address: '0x0502Cb01F792533597BbC5d51f6bA677d6962eA8',
+                    abi: [
+                          {
+                            "inputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "constructor"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "contractMove",
+                            "outputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xa2b3198b"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "joinMove",
+                                "type": "uint8"
+                              },
+                              {
+                                "internalType": "string",
+                                "name": "secret",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "joinAndReveal",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0x191a02d1"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "player",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "addr",
+                                "type": "address"
+                              },
+                              {
+                                "internalType": "bytes32",
+                                "name": "moveHash",
+                                "type": "bytes32"
+                              },
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "move",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0x48db5f89"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "reset",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0xd826f88f"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "winner",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xdfbf53ae"
+                          }
+                        ]
+                    },
+                // Base Testnet
+                '84531': {
+                    address: '0xBCE9F3665b1d599DC0c41BA397B1219fd4198F52',
+                    abi: [
+                          {
+                            "inputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "constructor"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "contractMove",
+                            "outputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xa2b3198b"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "joinMove",
+                                "type": "uint8"
+                              },
+                              {
+                                "internalType": "string",
+                                "name": "secret",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "joinAndReveal",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0x191a02d1"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "player",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "addr",
+                                "type": "address"
+                              },
+                              {
+                                "internalType": "bytes32",
+                                "name": "moveHash",
+                                "type": "bytes32"
+                              },
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "move",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0x48db5f89"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "reset",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0xd826f88f"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "winner",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xdfbf53ae"
+                          }
+                        ]
+                    },
+                // Base
+                '8453': {
+                    address: '0x6589fe2EA8ECAF991792eD734A5baE568564380E',
+                    abi: [
+                          {
+                            "inputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "constructor"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "contractMove",
+                            "outputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xa2b3198b"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "joinMove",
+                                "type": "uint8"
+                              },
+                              {
+                                "internalType": "string",
+                                "name": "secret",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "joinAndReveal",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0x191a02d1"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "player",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "addr",
+                                "type": "address"
+                              },
+                              {
+                                "internalType": "bytes32",
+                                "name": "moveHash",
+                                "type": "bytes32"
+                              },
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "move",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0x48db5f89"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "reset",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0xd826f88f"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "winner",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xdfbf53ae"
+                          }
+                        ]
+                    },
+                // Linea
+                '59144': {
+                    address: '0x4f5b83efc6F42208d0433FC3f33B24cc3fb38df2',
+                    abi: [
+                          {
+                            "inputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "constructor"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "contractMove",
+                            "outputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xa2b3198b"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "joinMove",
+                                "type": "uint8"
+                              },
+                              {
+                                "internalType": "string",
+                                "name": "secret",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "joinAndReveal",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0x191a02d1"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "player",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "addr",
+                                "type": "address"
+                              },
+                              {
+                                "internalType": "bytes32",
+                                "name": "moveHash",
+                                "type": "bytes32"
+                              },
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "move",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0x48db5f89"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "reset",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0xd826f88f"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "winner",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xdfbf53ae"
+                          }
+                        ]
+                        },
+                // zkSync Era
+                '324': {
+                    address: '0xCE76Ae7b0Dc32E05652B2874b7f4292B31B8386B',
+                    abi: [
+                      {
+                        "inputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "constructor"
+                      },
+                      {
+                        "inputs": [],
+                        "name": "contractMove",
+                        "outputs": [
+                          {
+                            "internalType": "enum RSPSinglePlayerGS.Move",
+                            "name": "",
+                            "type": "uint8"
+                          }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function",
+                        "constant": true,
+                        "signature": "0xa2b3198b"
+                      },
+                      {
+                        "inputs": [
+                          {
+                            "internalType": "enum RSPSinglePlayerGS.Move",
+                            "name": "joinMove",
+                            "type": "uint8"
+                          },
+                          {
+                            "internalType": "string",
+                            "name": "secret",
+                            "type": "string"
+                          }
+                        ],
+                        "name": "joinAndReveal",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function",
+                        "signature": "0x191a02d1"
+                      },
+                      {
+                        "inputs": [],
+                        "name": "player",
+                        "outputs": [
+                          {
+                            "internalType": "address",
+                            "name": "addr",
+                            "type": "address"
+                          },
+                          {
+                            "internalType": "bytes32",
+                            "name": "moveHash",
+                            "type": "bytes32"
+                          },
+                          {
+                            "internalType": "enum RSPSinglePlayerGS.Move",
+                            "name": "move",
+                            "type": "uint8"
+                          }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function",
+                        "constant": true,
+                        "signature": "0x48db5f89"
+                      },
+                      {
+                        "inputs": [],
+                        "name": "reset",
+                        "outputs": [],
+                        "stateMutability": "nonpayable",
+                        "type": "function",
+                        "signature": "0xd826f88f"
+                      },
+                      {
+                        "inputs": [],
+                        "name": "winner",
+                        "outputs": [
+                          {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                          }
+                        ],
+                        "stateMutability": "view",
+                        "type": "function",
+                        "constant": true,
+                        "signature": "0xdfbf53ae"
+                      }
+                    ]
+                        },
+                // Polygon zkEVM
+                '1101': {
+                    address: '0x8bFd51626c3f63A242450568939F94f1202bCB86',
+                    abi: [
+                          {
+                            "inputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "constructor"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "contractMove",
+                            "outputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xa2b3198b"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "joinMove",
+                                "type": "uint8"
+                              },
+                              {
+                                "internalType": "string",
+                                "name": "secret",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "joinAndReveal",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0x191a02d1"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "player",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "addr",
+                                "type": "address"
+                              },
+                              {
+                                "internalType": "bytes32",
+                                "name": "moveHash",
+                                "type": "bytes32"
+                              },
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "move",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0x48db5f89"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "reset",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0xd826f88f"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "winner",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xdfbf53ae"
+                          }
+                        ]
+                        },
+                // Scroll
+                '534352': {
+                    address: '0x6589fe2EA8ECAF991792eD734A5baE568564380E',
+                    abi: [
+                          {
+                            "inputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "constructor"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "contractMove",
+                            "outputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xa2b3198b"
+                          },
+                          {
+                            "inputs": [
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "joinMove",
+                                "type": "uint8"
+                              },
+                              {
+                                "internalType": "string",
+                                "name": "secret",
+                                "type": "string"
+                              }
+                            ],
+                            "name": "joinAndReveal",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0x191a02d1"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "player",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "addr",
+                                "type": "address"
+                              },
+                              {
+                                "internalType": "bytes32",
+                                "name": "moveHash",
+                                "type": "bytes32"
+                              },
+                              {
+                                "internalType": "enum RSPSinglePlayerGS.Move",
+                                "name": "move",
+                                "type": "uint8"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0x48db5f89"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "reset",
+                            "outputs": [],
+                            "stateMutability": "nonpayable",
+                            "type": "function",
+                            "signature": "0xd826f88f"
+                          },
+                          {
+                            "inputs": [],
+                            "name": "winner",
+                            "outputs": [
+                              {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                              }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function",
+                            "constant": true,
+                            "signature": "0xdfbf53ae"
+                          }
+                        ]
+              }
+            };
+            */
     </script>
 </body>
 </html>
