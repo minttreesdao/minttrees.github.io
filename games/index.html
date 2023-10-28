@@ -396,6 +396,7 @@
             });
 
             document.getElementById('mintButton').addEventListener('click', async () => {
+                const accounts = await web3.eth.getAccounts();
                 const recipient = accounts[0]; 
                 const tokenURI = 'QmNcgrF6fphFpESM8viPJ4aPh9oZCutMjt3CpLTFuE5Pp6'; // zkSync Era
 
