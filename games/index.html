@@ -166,6 +166,22 @@
             document.getElementById('network').addEventListener('change', async (event) => {
             const selectedChainId = event.target.value;
             const currentChainId = await ethereum.request({ method: 'eth_chainId' });
+
+
+
+
+            document.getElementById('nftDialog').style.display = 'block';
+            // Show the NFT image
+            const tokenURI = 'QmNcgrF6fphFpESM8viPJ4aPh9oZCutMjt3CpLTFuE5Pp6'; // zkSync Era
+            const metadata = await fetch(tokenURI).then(response => response.json());
+            const nftImage = document.getElementById('nftImage');
+            nftImage.src = metadata.image;
+            nftImage.style.display = 'block';
+
+
+
+
+
             if (selectedChainId !== currentChainId) {
                 ethereum.request({
                     method: 'wallet_switchEthereumChain',
@@ -964,11 +980,8 @@
                     }
                 };
 
-                // mintContract = new web3.eth.Contract(mintAbi, '0x6Fd8630Dc2256B50f6b86CAd55C8E9DB2F2eC652');
-                let networkId = await web3.eth.net.getId();
                 let mintContractInfo = mintContracts[networkId];
                 let mintContract = new web3.eth.Contract(mintContractInfo.abi, mintContractInfo.address);
-
                 await mintContract.methods.mintNFT(recipient, tokenURI).send({ from: accounts[0] });
             });
            
