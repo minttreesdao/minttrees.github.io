@@ -63,6 +63,7 @@
               <option value="0x8274f">T Scroll Sepolia</option>
               <option value="0x1389">T Mantle Testnet</option>
               <option value="0x28c5f">T Taiko Jolnir Testnet</option>
+              <option value="0x13881">T Polygon Mumbai Testnet</option>
               <option value="0x2105">Base</option>
               <option value="0xe708">Linea</option>
               <option value="0x144">zkSync Era</option>
@@ -308,6 +309,11 @@
                     address: '0x8bFd51626c3f63A242450568939F94f1202bCB86',
                     abi: abi
                     },
+                // Polygon Mumbai Testnet
+                '80001': {
+                    address: '0xFE6c13A80021F6664714c261bf7eF4110911F547',
+                    abi: abi
+                    },
                 // Base
                 '8453': {
                     address: '0xEe20dD7eBe16De655e17463E50cA03aD3B0F8075',
@@ -388,6 +394,12 @@
                 if (winner == accounts[0]) {
                     document.getElementById('winner').innerText = "Congratulations 🥳 You won!";
                     document.getElementById('nftDialog').style.display = 'block';
+                    // Show the NFT image
+                    const tokenURI = 'QmNcgrF6fphFpESM8viPJ4aPh9oZCutMjt3CpLTFuE5Pp6'; // zkSync Era
+                    const metadata = await fetch(tokenURI).then(response => response.json());
+                    const nftImage = document.getElementById('nftImage');
+                    nftImage.src = metadata.image;
+                    nftImage.style.display = 'block';
                 } else if (winner == contractInfo.address) {
                     document.getElementById('winner').innerText = "You lost!";
                 } else {
@@ -398,12 +410,10 @@
             document.getElementById('mintButton').addEventListener('click', async () => {
                 const accounts = await web3.eth.getAccounts();
                 const recipient = accounts[0]; 
-                const tokenURI = 'QmNcgrF6fphFpESM8viPJ4aPh9oZCutMjt3CpLTFuE5Pp6'; // zkSync Era
 
                 let networkId = await web3.eth.net.getId();
                 let contractInfo = contracts[networkId];
-                // let mintContract = new web3.eth.Contract(contractInfo.abi, contractInfo.address);
-                let mintAbi = [
+                const mintAbi = [
                                 {
                                     "inputs": [],
                                     "stateMutability": "nonpayable",
@@ -873,18 +883,93 @@
                                     "type": "function",
                                     "signature": "0xf2fde38b"
                                 }
-                                ]
+                ]
 
-                let mintContract = new web3.eth.Contract(mintAbi, '0x6Fd8630Dc2256B50f6b86CAd55C8E9DB2F2eC652');
-                
+
+                let mintContracts = {
+                // Scroll Sepolia
+                    '534351': {
+                        address: '0x6Fd8630Dc2256B50f6b86CAd55C8E9DB2F2eC652',
+                        abi: abi
+                        },
+                    // Base Testnet
+                    '84531': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Mantle Testnet
+                    '5001': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Taiko Jolnir Testnet
+                    '167007': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Polygon Mumbai Testnet
+                    '80001': {
+                        address: '0x6FCB1DbDdA3509308f6892Db94872Bd1180fD9Bb',
+                        abi: abi
+                        },
+                    // Base
+                    '8453': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Linea
+                    '59144': {
+                        address: '',
+                        abi: abi
+                        },
+                    // zkSync Era
+                    '324': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Polygon zkEVM
+                    '1101': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Scroll
+                    '534352': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Mantle
+                    '5000': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Zora
+                    '7777777': {
+                        address: '',
+                        abi: abi
+                        },
+                    // Optimism
+                    '10': {
+                        address: '',
+                        abi: abi
+                    },
+                    // Arbitrum
+                    '42161': {
+                        address: '',
+                        abi: abi
+                    },
+                    // Arbitrum Nova
+                    '42170': {
+                        address: '',
+                        abi: abi
+                    }
+                };
+
+                // mintContract = new web3.eth.Contract(mintAbi, '0x6Fd8630Dc2256B50f6b86CAd55C8E9DB2F2eC652');
+                let networkId = await web3.eth.net.getId();
+                let mintContractInfo = mintContracts[networkId];
+                let mintContract = new web3.eth.Contract(mintContractInfo.abi, mintContractInfo.address);
 
                 await mintContract.methods.mintNFT(recipient, tokenURI).send({ from: accounts[0] });
-
-                // Show the NFT image
-                const metadata = await fetch(tokenURI).then(response => response.json());
-                const nftImage = document.getElementById('nftImage');
-                nftImage.src = metadata.image;
-                nftImage.style.display = 'block';
             });
            
             document.getElementById('resetButton').addEventListener('click', async () => {
