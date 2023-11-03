@@ -172,9 +172,21 @@
 
             document.getElementById('nftDialog').style.display = 'block';
             // Show the NFT image
-            const tokenURI = 'QmNcgrF6fphFpESM8viPJ4aPh9oZCutMjt3CpLTFuE5Pp6'; // zkSync Era
-            const metadata = await fetch(tokenURI).then(response => response.json());
-            const nftImage = document.getElementById('nftImage');
+            const tokenURI = 'https://ipfs.io/ipfs/QmNcgrF6fphFpESM8viPJ4aPh9oZCutMjt3CpLTFuE5Pp6'; // zkSync Era
+            //const metadata = await fetch(tokenURI).then(response => response.json());
+            //const nftImage = document.getElementById('nftImage');
+
+            fetch(tokenURI)
+                .then(response => response.json())
+                .then(metadata => {
+                    const nftImage = document.getElementById('nftImage');
+                    nftImage.src = metadata.image;
+                    nftImage.style.display = 'block';
+                })
+                .catch(error => console.error('Error fetching token URI:', error));
+
+
+
             nftImage.src = metadata.image;
             nftImage.style.display = 'block';
 
